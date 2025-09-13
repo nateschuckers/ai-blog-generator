@@ -1,5 +1,53 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Bot, Camera, Sparkles, Building2, Copy, Check, ThumbsDown, BookOpen, Edit, Feather, SlidersHorizontal, ImageUp, XCircle, CalendarDays, Hash } from 'lucide-react';
+
+// --- SVG Icons (replaces lucide-react import) ---
+const Icon = ({ children, className = '' }) => <div className={`w-5 h-5 ${className}`}>{children}</div>;
+
+const Bot = (props) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" /></svg>
+);
+const Camera = (props) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" /><circle cx="12" cy="13" r="3" /></svg>
+);
+const Sparkles = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="m12 3-1.9 4.2-4.2 1.9 4.2 1.9L12 15l1.9-4.2 4.2-1.9-4.2-1.9L12 3z" /><path d="M5 21v-4" /><path d="M19 21v-4" /><path d="M3 12H7" /><path d="M17 12h4" /></svg>
+);
+const Building2 = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18" /><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" /><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" /><path d="M10 6h4" /><path d="M10 10h4" /><path d="M10 14h4" /><path d="M10 18h4" /></svg>
+);
+const Copy = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></svg>
+);
+const Check = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="20 6 9 17 4 12" /></svg>
+);
+const ThumbsDown = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M17 14V2" /><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22h-1a2 2 0 0 1-1.92-1.44l-1.4-3.44Z" /></svg>
+);
+const BookOpen = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></svg>
+);
+const Edit = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></svg>
+);
+const Feather = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z" /><line x1="16" x2="2" y1="8" y2="22" /><line x1="17.5" x2="9" y1="15" y2="15" /></svg>
+);
+const SlidersHorizontal = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><line x1="21" x2="14" y1="4" y2="4" /><line x1="10" x2="3" y1="4" y2="4" /><line x1="21" x2="12" y1="12" y2="12" /><line x1="8" x2="3" y1="12" y2="12" /><line x1="21" x2="16" y1="20" y2="20" /><line x1="12" x2="3" y1="20" y2="20" /><line x1="14" x2="14" y1="2" y2="6" /><line x1="8" x2="8" y1="10" y2="14" /><line x1="16" x2="16" y1="18" y2="22" /></svg>
+);
+const ImageUp = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M10.3 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10l-3.1-3.1a2 2 0 0 0-2.814.014L11.5 16" /><path d="m16 5 2 2" /><path d="M21 15v6" /><path d="M18 18h6" /><circle cx="8" cy="8" r="2" /></svg>
+);
+const XCircle = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="12" cy="12" r="10" /><path d="m15 9-6 6" /><path d="m9 9 6 6" /></svg>
+);
+const CalendarDays = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><rect width="18" height="18" x="3" y="4" rx="2" ry="2" /><line x1="16" x2="16" y1="2" y2="6" /><line x1="8" x2="8" y1="2" y2="6" /><line x1="3" x2="21" y1="10" y2="10" /><path d="M8 14h.01" /><path d="M12 14h.01" /><path d="M16 14h.01" /><path d="M8 18h.01" /><path d="M12 18h.01" /><path d="M16 18h.01" /></svg>
+);
+const Hash = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><line x1="4" x2="20" y1="9" y2="9" /><line x1="4" x2="20" y1="15" y2="15" /><line x1="10" x2="8" y1="3" y2="21" /><line x1="16" x2="14" y1="3" y2="21" /></svg>
+);
 
 // --- PROMPT LIBRARY (NOW WITH CATEGORIES) ---
 const LONGITUDE_CATEGORIES = {
@@ -23,10 +71,6 @@ const FIGURE_FORM_CATEGORIES = {
 const LONGITUDE_TONES = ['Adventurous', 'Educational', 'Inspirational', 'Serene'];
 const FIGURE_FORM_TONES = ['Empowering', 'Luxurious', 'Reassuring', 'Playful'];
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-
-// --- Helper Components ---
-const Icon = ({ component: Component, className = '' }) => <Component className={`w-5 h-5 ${className}`} />;
 
 const CopyButton = ({ textToCopy }) => {
   const [copied, setCopied] = useState(false);
@@ -52,7 +96,7 @@ const CopyButton = ({ textToCopy }) => {
       className="absolute top-2 right-2 p-2 bg-zinc-700/80 rounded-lg text-zinc-300 hover:bg-zinc-600 hover:text-white transition-all duration-200"
       aria-label="Copy to clipboard"
     >
-      {copied ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
+      {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
     </button>
   );
 };
@@ -198,7 +242,6 @@ function App() {
       const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
       const payload = { contents: [{ role: "user", parts: userParts }], systemInstruction: systemInstruction };
       
-      // Implement exponential backoff for retries
       let response;
       let attempts = 0;
       while (attempts < 5) {
@@ -308,9 +351,9 @@ function App() {
     setLoadingMessage('');
   }, [activeBusiness, selectedTopic, customTopic, selectedTone, equipmentName, imageBase64, numPostsPerMonth, startMonth, numMonths, generateSinglePost]);
 
-  const BusinessTab = ({ name, businessKey, icon: IconComponent }) => (
+  const BusinessTab = ({ name, businessKey, icon }) => (
     <button onClick={() => handleBusinessChange(businessKey)} className={`flex items-center gap-3 px-4 py-2 font-semibold rounded-md transition-all duration-200 ${ activeBusiness === businessKey ? 'bg-rose-700 text-white shadow-lg' : 'bg-zinc-700 text-zinc-300 hover:bg-zinc-600' }`} >
-      <Icon component={IconComponent} /> <span>{name}</span>
+      <Icon>{icon}</Icon> <span>{name}</span>
     </button>
   );
   
@@ -339,22 +382,22 @@ function App() {
       <div className="container mx-auto p-4 md:p-8">
         <header className="text-center mb-8 border-b border-zinc-700 pb-6">
           <div className="flex justify-center items-center gap-3 mb-2">
-            <Bot className="w-8 h-8 text-rose-400" />
+            <Icon><Bot className="w-8 h-8 text-rose-400" /></Icon>
             <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-zinc-100">Strategic Blog Post Generator</h1>
           </div>
           <p className="text-zinc-400 max-w-2xl mx-auto">Your personal AI content assistant. Generate SEO-optimized blog posts for your photography businesses with one click.</p>
         </header>
 
         <div className="flex justify-center items-center gap-4 mb-6">
-          <BusinessTab name="Longitude Photography" businessKey="Longitude" icon={Camera} />
-          <BusinessTab name="Figure & Form" businessKey="FigureForm" icon={Building2} />
+          <BusinessTab name="Longitude Photography" businessKey="Longitude" icon={<Camera />} />
+          <BusinessTab name="Figure & Form" businessKey="FigureForm" icon={<Building2 />} />
         </div>
 
         <div className="max-w-xl mx-auto mb-8 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
                 <label htmlFor="topic-select" className="block text-sm font-medium text-zinc-400 mb-2 text-center">1. Select a Category</label>
                 <div className="relative">
-                    <BookOpen className="w-5 h-5 text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    <Icon className="text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"><BookOpen /></Icon>
                     <select id="topic-select" value={selectedTopic} onChange={(e) => handleTopicChange(e.target.value)} className="w-full pl-10 pr-4 py-3 bg-zinc-800 border border-zinc-600 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-rose-500">
                         <option value="All Topics">All Topics (Random)</option>
                         {Object.keys(currentCategories).map(topic => ( <option key={topic} value={topic}>{topic}</option> ))}
@@ -365,7 +408,7 @@ function App() {
             <div className={`${isReviewMode || isBehindTheShotMode || isMonthlyPackMode ? 'opacity-50' : ''}`}>
                 <label htmlFor="tone-select" className="block text-sm font-medium text-zinc-400 mb-2 text-center">2. Choose a Tone</label>
                 <div className="relative">
-                    <Feather className="w-5 h-5 text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    <Icon className="text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"><Feather /></Icon>
                     <select id="tone-select" value={selectedTone} onChange={(e) => setSelectedTone(e.target.value)} disabled={isReviewMode || isBehindTheShotMode || isMonthlyPackMode} className="w-full pl-10 pr-4 py-3 bg-zinc-800 border border-zinc-600 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-rose-500 disabled:cursor-not-allowed">
                        {isReviewMode && <option>Educational (Review)</option>}
                        {isBehindTheShotMode && <option>{activeBusiness === 'Longitude' ? 'Inspirational' : 'Empowering'}</option>}
@@ -381,7 +424,7 @@ function App() {
                 <div>
                     <label htmlFor="month-select" className="block text-sm font-medium text-zinc-400 mb-2 text-center">3. Start Month</label>
                     <div className="relative">
-                        <CalendarDays className="w-5 h-5 text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                        <Icon className="text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"><CalendarDays /></Icon>
                         <select id="month-select" value={startMonth} onChange={(e) => setStartMonth(e.target.value)} className="w-full pl-10 pr-4 py-3 bg-zinc-800 border border-zinc-600 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-rose-500">
                             {MONTHS.map(month => <option key={month} value={month}>{month}</option>)}
                         </select>
@@ -390,7 +433,7 @@ function App() {
                  <div>
                     <label htmlFor="num-posts-select" className="block text-sm font-medium text-zinc-400 mb-2 text-center">4. Posts per Month</label>
                     <div className="relative">
-                         <Hash className="w-5 h-5 text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                        <Icon className="text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"><Hash /></Icon>
                         <select id="num-posts-select" value={numPostsPerMonth} onChange={(e) => setNumPostsPerMonth(parseInt(e.target.value))} className="w-full pl-10 pr-4 py-3 bg-zinc-800 border border-zinc-600 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-rose-500">
                             {[1, 2, 3, 4].map(n => <option key={n} value={n}>{n} Post{n > 1 ? 's' : ''}</option>)}
                         </select>
@@ -399,7 +442,7 @@ function App() {
                 <div>
                     <label htmlFor="num-months-select" className="block text-sm font-medium text-zinc-400 mb-2 text-center">5. Number of Months</label>
                     <div className="relative">
-                        <CalendarDays className="w-5 h-5 text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                        <Icon className="text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"><CalendarDays /></Icon>
                         <select id="num-months-select" value={numMonths} onChange={(e) => setNumMonths(parseInt(e.target.value))} className="w-full pl-10 pr-4 py-3 bg-zinc-800 border border-zinc-600 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-rose-500">
                             {[1, 2, 3, 4, 5, 6].map(n => <option key={n} value={n}>{n} Month{n > 1 ? 's' : ''}</option>)}
                         </select>
@@ -435,7 +478,7 @@ function App() {
             <div className="max-w-xl mx-auto mb-8 animate-fade-in">
                 <label className="block text-sm font-medium text-zinc-400 mb-2 text-center">3. Enter Your Custom Topic Below</label>
                 <div className="relative">
-                    <Edit className="w-5 h-5 text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    <Icon className="text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"><Edit /></Icon>
                     <textarea value={customTopic} onChange={(e) => setCustomTopic(e.target.value)} placeholder="e.g., 'A post about black and white photos for a minimalist office.'" className="w-full pl-10 pr-4 py-3 bg-zinc-800 border border-zinc-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-500" rows="3" />
                 </div>
             </div>
@@ -445,7 +488,7 @@ function App() {
             <div className="max-w-xl mx-auto mb-8 animate-fade-in">
                 <label className="block text-sm font-medium text-zinc-400 mb-2 text-center">3. Enter Equipment to Review</label>
                 <div className="relative">
-                    <SlidersHorizontal className="w-5 h-5 text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    <Icon className="text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"><SlidersHorizontal /></Icon>
                     <input value={equipmentName} onChange={(e) => setEquipmentName(e.target.value)} placeholder="e.g., 'Canon RF 85mm f/1.2L' or 'Godox AD200 Pro'" className="w-full pl-10 pr-4 py-3 bg-zinc-800 border border-zinc-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-500" />
                 </div>
             </div>
@@ -459,7 +502,7 @@ function App() {
         </div>
         
         <div className="max-w-4xl mx-auto space-y-8">
-          {error && ( <div className="bg-red-900/50 border border-red-700 text-red-200 p-4 rounded-lg flex items-center gap-3"><ThumbsDown /><p>{error}</p></div> )}
+          {error && ( <div className="bg-red-900/50 border border-red-700 text-red-200 p-4 rounded-lg flex items-center gap-3"><Icon><ThumbsDown /></Icon><p>{error}</p></div> )}
           
           {blogPosts.map((post, index) => {
               const showMonthHeader = post.month && post.month !== lastMonth;
