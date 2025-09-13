@@ -153,7 +153,7 @@ const OutputField = ({ label, content, isBody = false }) => {
 };
 
 // --- Main App Component ---
-function App() {
+export default function App() {
   const [activeBusiness, setActiveBusiness] = useState('Longitude');
   const [selectedTopic, setSelectedTopic] = useState('All Topics');
   const [selectedTone, setSelectedTone] = useState(LONGITUDE_TONES[0]);
