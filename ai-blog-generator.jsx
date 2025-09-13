@@ -1,8 +1,7 @@
-import React, { useState, useCallback, useEffect } from 'react';
+const { useState, useCallback, useEffect, Fragment } = React;
 
-// --- SVG Icons (replaces lucide-react import) ---
+// --- SVG Icons (self-contained) ---
 const Icon = ({ children, className = '' }) => <div className={`w-5 h-5 ${className}`}>{children}</div>;
-
 const Bot = (props) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" /></svg>
 );
@@ -153,7 +152,7 @@ const OutputField = ({ label, content, isBody = false }) => {
 };
 
 // --- Main App Component ---
-export default function App() {
+function App() {
   const [activeBusiness, setActiveBusiness] = useState('Longitude');
   const [selectedTopic, setSelectedTopic] = useState('All Topics');
   const [selectedTone, setSelectedTone] = useState(LONGITUDE_TONES[0]);
@@ -397,7 +396,7 @@ export default function App() {
             <div>
                 <label htmlFor="topic-select" className="block text-sm font-medium text-zinc-400 mb-2 text-center">1. Select a Category</label>
                 <div className="relative">
-                    <Icon className="text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"><BookOpen /></Icon>
+                    <Icon className="text-zinc-400 absolute left-3 top-1/2 -translate-y-1.2 pointer-events-none"><BookOpen /></Icon>
                     <select id="topic-select" value={selectedTopic} onChange={(e) => handleTopicChange(e.target.value)} className="w-full pl-10 pr-4 py-3 bg-zinc-800 border border-zinc-600 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-rose-500">
                         <option value="All Topics">All Topics (Random)</option>
                         {Object.keys(currentCategories).map(topic => ( <option key={topic} value={topic}>{topic}</option> ))}
@@ -408,7 +407,7 @@ export default function App() {
             <div className={`${isReviewMode || isBehindTheShotMode || isMonthlyPackMode ? 'opacity-50' : ''}`}>
                 <label htmlFor="tone-select" className="block text-sm font-medium text-zinc-400 mb-2 text-center">2. Choose a Tone</label>
                 <div className="relative">
-                    <Icon className="text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"><Feather /></Icon>
+                    <Icon className="text-zinc-400 absolute left-3 top-1/2 -translate-y-1.2 pointer-events-none"><Feather /></Icon>
                     <select id="tone-select" value={selectedTone} onChange={(e) => setSelectedTone(e.target.value)} disabled={isReviewMode || isBehindTheShotMode || isMonthlyPackMode} className="w-full pl-10 pr-4 py-3 bg-zinc-800 border border-zinc-600 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-rose-500 disabled:cursor-not-allowed">
                        {isReviewMode && <option>Educational (Review)</option>}
                        {isBehindTheShotMode && <option>{activeBusiness === 'Longitude' ? 'Inspirational' : 'Empowering'}</option>}
@@ -424,7 +423,7 @@ export default function App() {
                 <div>
                     <label htmlFor="month-select" className="block text-sm font-medium text-zinc-400 mb-2 text-center">3. Start Month</label>
                     <div className="relative">
-                        <Icon className="text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"><CalendarDays /></Icon>
+                        <Icon className="text-zinc-400 absolute left-3 top-1/2 -translate-y-1.2 pointer-events-none"><CalendarDays /></Icon>
                         <select id="month-select" value={startMonth} onChange={(e) => setStartMonth(e.target.value)} className="w-full pl-10 pr-4 py-3 bg-zinc-800 border border-zinc-600 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-rose-500">
                             {MONTHS.map(month => <option key={month} value={month}>{month}</option>)}
                         </select>
@@ -433,7 +432,7 @@ export default function App() {
                  <div>
                     <label htmlFor="num-posts-select" className="block text-sm font-medium text-zinc-400 mb-2 text-center">4. Posts per Month</label>
                     <div className="relative">
-                        <Icon className="text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"><Hash /></Icon>
+                        <Icon className="text-zinc-400 absolute left-3 top-1/2 -translate-y-1.2 pointer-events-none"><Hash /></Icon>
                         <select id="num-posts-select" value={numPostsPerMonth} onChange={(e) => setNumPostsPerMonth(parseInt(e.target.value))} className="w-full pl-10 pr-4 py-3 bg-zinc-800 border border-zinc-600 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-rose-500">
                             {[1, 2, 3, 4].map(n => <option key={n} value={n}>{n} Post{n > 1 ? 's' : ''}</option>)}
                         </select>
@@ -442,7 +441,7 @@ export default function App() {
                 <div>
                     <label htmlFor="num-months-select" className="block text-sm font-medium text-zinc-400 mb-2 text-center">5. Number of Months</label>
                     <div className="relative">
-                        <Icon className="text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"><CalendarDays /></Icon>
+                        <Icon className="text-zinc-400 absolute left-3 top-1/2 -translate-y-1.2 pointer-events-none"><CalendarDays /></Icon>
                         <select id="num-months-select" value={numMonths} onChange={(e) => setNumMonths(parseInt(e.target.value))} className="w-full pl-10 pr-4 py-3 bg-zinc-800 border border-zinc-600 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-rose-500">
                             {[1, 2, 3, 4, 5, 6].map(n => <option key={n} value={n}>{n} Month{n > 1 ? 's' : ''}</option>)}
                         </select>
@@ -478,7 +477,7 @@ export default function App() {
             <div className="max-w-xl mx-auto mb-8 animate-fade-in">
                 <label className="block text-sm font-medium text-zinc-400 mb-2 text-center">3. Enter Your Custom Topic Below</label>
                 <div className="relative">
-                    <Icon className="text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"><Edit /></Icon>
+                    <Icon className="text-zinc-400 absolute left-3 top-1/2 -translate-y-1.2 pointer-events-none"><Edit /></Icon>
                     <textarea value={customTopic} onChange={(e) => setCustomTopic(e.target.value)} placeholder="e.g., 'A post about black and white photos for a minimalist office.'" className="w-full pl-10 pr-4 py-3 bg-zinc-800 border border-zinc-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-500" rows="3" />
                 </div>
             </div>
@@ -488,7 +487,7 @@ export default function App() {
             <div className="max-w-xl mx-auto mb-8 animate-fade-in">
                 <label className="block text-sm font-medium text-zinc-400 mb-2 text-center">3. Enter Equipment to Review</label>
                 <div className="relative">
-                    <Icon className="text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"><SlidersHorizontal /></Icon>
+                    <Icon className="text-zinc-400 absolute left-3 top-1/2 -translate-y-1.2 pointer-events-none"><SlidersHorizontal /></Icon>
                     <input value={equipmentName} onChange={(e) => setEquipmentName(e.target.value)} placeholder="e.g., 'Canon RF 85mm f/1.2L' or 'Godox AD200 Pro'" className="w-full pl-10 pr-4 py-3 bg-zinc-800 border border-zinc-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-500" />
                 </div>
             </div>
@@ -544,4 +543,3 @@ export default function App() {
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
 root.render(<App />);
-
