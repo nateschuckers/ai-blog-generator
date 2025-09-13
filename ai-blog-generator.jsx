@@ -109,7 +109,7 @@ const OutputField = ({ label, content, isBody = false }) => {
 };
 
 // --- Main App Component ---
-export default function App() {
+function App() {
   const [activeBusiness, setActiveBusiness] = useState('Longitude');
   const [selectedTopic, setSelectedTopic] = useState('All Topics');
   const [selectedTone, setSelectedTone] = useState(LONGITUDE_TONES[0]);
@@ -495,4 +495,10 @@ export default function App() {
     </div>
   );
 }
+
+// --- This is the crucial part that was missing ---
+// It tells React where to render the App component.
+const container = document.getElementById('root');
+const root = ReactDOM.createRoot(container);
+root.render(<App />);
 
